@@ -2,15 +2,13 @@
 from datetime import datetime
 
 from django.http import HttpResponse
+from . import FetchDataFromBackEnd
+
 
 def index(request):
-    now = datetime.now()
-    html = f'''
-    <html>
-        <body>
-            <h1>Hello from Vercel!</h1>
-            <p>The current time is { now }.</p>
-        </body>
-    </html>
-    '''
-    return HttpResponse(html)
+    json_data = "null"
+    if request.method == "GET":
+        query_str = request.GET.get('query')
+        print("a: ", query_str)
+        json_data = FetchDataFromBackEnd.fetch_data_based_on_query(query=query_str)
+    return HttpResponse(json_data)
