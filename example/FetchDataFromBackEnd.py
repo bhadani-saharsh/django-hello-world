@@ -35,12 +35,12 @@ def read_file_from_drive(url):
     return df
 
 
-def convert_data_frame_to_json(df):
+def convert_data_frame_to_xml(df):
     xml_str = df.to_xml()
     return xml_str
 
 
-def convert_data_frame_to_xml(df):
+def convert_data_frame_to_json(df):
     json_str = df.to_json(orient="records")
     return json_str
 
