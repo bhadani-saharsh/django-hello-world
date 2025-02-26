@@ -36,7 +36,7 @@ def read_file_from_drive(url):
 
 
 def convert_data_frame_to_json(df):
-    xml_str = df.to_xml(orient="records")
+    xml_str = df.to_xml()
     return xml_str
 
 
