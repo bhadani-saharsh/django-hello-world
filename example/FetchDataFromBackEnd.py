@@ -1,10 +1,10 @@
 import pandas as pd
 
 
-DATA_POPULAR_PRODUCTS_URL = "https://drive.google.com/file/d/1VSF5Oc0yosSFommT1YBsUKgDpdhHAqAr/view?usp=drive_link"
-DATA_PRODUCT_CART_URL = "https://drive.google.com/file/d/178PSc3-gai20k3rLKjxtjnrVOa17dLJ4/view?usp=drive_link"
-DATA_INVENTORY_URL ="https://drive.google.com/file/d/1A3qZtK4X4b_ElpXaX-ioQ_TuuclSspQD/view?usp=drive_link"
-DATA_PRODUCT_WISHLIST_URL = "https://drive.google.com/file/d/1pQY6gCq5sMgBv1sxi0jAIvzMDgsByd-g/view?usp=sharing"
+DATA_POPULAR_PRODUCTS_URL = "https://drive.google.com/file/d/1_fhkf0T1zUdN4WpNFXl9UbYeSPn-xyWH/view?usp=sharing"
+DATA_PRODUCT_CART_URL = "https://drive.google.com/file/d/1aA1QUSxN3b1l68sK5GJ-RkduPzNnQ4pL/view?usp=sharing"
+DATA_INVENTORY_URL ="https://drive.google.com/file/d/1WZJTzh8ezTfN14B30gkDntEQNz66zBla/view?usp=sharing"
+DATA_PRODUCT_WISHLIST_URL = "https://drive.google.com/file/d/1uSGsuR9O_w0_TaGLFRL_QIu3a8OiJfHb/view?usp=sharing"
 
 
 def fetch_data_based_on_query(query):
