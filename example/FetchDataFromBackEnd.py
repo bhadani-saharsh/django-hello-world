@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-DATA_POPULAR_PRODUCTS_URL = "https://drive.google.com/file/d/1_fhkf0T1zUdN4WpNFXl9UbYeSPn-xyWH/view?usp=sharing"
+DATA_POPULAR_PRODUCTS_URL = "https://docs.google.com/spreadsheets/d/1L_6uxLUUr963uwlQhbJUkYNwY6vsF9mavxjRnag-fe4/view?usp=sharing"
 DATA_PRODUCT_CART_URL = "https://drive.google.com/file/d/1aA1QUSxN3b1l68sK5GJ-RkduPzNnQ4pL/view?usp=sharing"
 DATA_INVENTORY_URL ="https://drive.google.com/file/d/1WZJTzh8ezTfN14B30gkDntEQNz66zBla/view?usp=sharing"
 DATA_PRODUCT_WISHLIST_URL = "https://drive.google.com/file/d/1uSGsuR9O_w0_TaGLFRL_QIu3a8OiJfHb/view?usp=sharing"
