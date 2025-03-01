@@ -68,6 +68,7 @@ def fetch_data_based_on_query(query):
 def read_file_from_drive(url):
     url = 'https://drive.google.com/uc?id=' + url.split('/')[-2]
     df = pd.read_csv(url, header=None)
+    df = df.apply(lambda x: x.str.strip() if x.dtype == "object" else x)
     '''Set first row as header'''
     df.columns = df.iloc[0]
     df = df[1:]
