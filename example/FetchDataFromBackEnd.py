@@ -7,6 +7,45 @@ DATA_INVENTORY_URL ="https://drive.google.com/file/d/1WR-CI07hntH9gvY6ukCESUXqrQ
 DATA_PRODUCT_WISHLIST_URL = "https://drive.google.com/file/d/16ZycJ9wJBcmFjwbDUT_zUxIkRee79Amb/view?usp=sharing"
 
 
+def fetch_data_based_on_str_params(search_str):
+    df = read_file_from_drive(DATA_INVENTORY_URL)
+    df_result = df[df["ProductName"].str.contains(search_str, case=False) | df["ProductCategory"].str.contains(search_str, case=False) | df["SubCategory"].str.contains(search_str, case=False) | df["ManufacturedBy"].str.contains(search_str, case=False) | df["ProductDescription"].str.contains(search_str, case=False)]
+    json_str = convert_data_frame_to_json(df_result)
+    return json_str
+
+
+def fetch_data_based_on_category_params(category):
+    df = read_file_from_drive(DATA_INVENTORY_URL)
+    json_str = convert_data_frame_to_json(df.loc[df['ProductCategory'] == category])
+    return json_str
+
+
+def fetch_data_based_on_product_params(product_id):
+    df = read_file_from_drive(DATA_INVENTORY_URL)
+    json_str = convert_data_frame_to_json(df.loc[df['ProductID'] == product_id])
+    return json_str
+
+
+def fetch_data_based_on_params(query):
+    json_str = ""
+    if query == "popularProduct":
+        df = read_file_from_drive(DATA_POPULAR_PRODUCTS_URL)
+        json_str = convert_data_frame_to_json(df)
+    elif query == "myCart":
+        df = read_file_from_drive(DATA_PRODUCT_CART_URL)
+        json_str = convert_data_frame_to_json(df)
+    elif query == "myWishlist":
+        df = read_file_from_drive(DATA_PRODUCT_WISHLIST_URL)
+        json_str = convert_data_frame_to_json(df)
+    elif query == "productInventory":
+        df = read_file_from_drive(DATA_INVENTORY_URL)
+        json_str = convert_data_frame_to_json(df)
+    else:
+        json_str = '{"message":"Hello World!"}'
+    return json_str
+
+
+
 def fetch_data_based_on_query(query):
     json_str = ""
     if query == "popularProduct":
@@ -45,4 +84,9 @@ def convert_data_frame_to_json(df):
     return json_str
 
 if __name__ == '__main__':
-    fetch_data_based_on_query("popularProduct")
+    json = fetch_data_based_on_query("popularProduct")
+    print(json)
+    json = fetch_data_based_on_str_params("samsung")
+    print(json)
+    json = fetch_data_based_on_product_params("CE001")
+    print(json)
