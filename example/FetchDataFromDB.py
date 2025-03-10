@@ -20,6 +20,7 @@ def use_database(my_client):
 def get_collection_from_database(db, table_name):
     return db[table_name]
 
+
 def get_results_for_user_name(table, user_name, password):
     result = table.find_one({TableDetails.USER_TABLE["USER_EMAIL"] : user_name, TableDetails.USER_TABLE["USER_PASSWORD"] : password})
     if result is None:
@@ -27,10 +28,6 @@ def get_results_for_user_name(table, user_name, password):
     else:
         df = pd.json_normalize(result)
         return df
-
-
-def match_password_from_result_and_password_entered(result, password):
-    pass
 
 
 def validate_login_credentials_process_results(user_name, password):
@@ -44,11 +41,10 @@ def validate_login_credentials_process_results(user_name, password):
         return convert_data_frame_to_json(result[['userID', 'userType']])
 
 
-
 def convert_data_frame_to_json(df):
     json_str = df.to_json(orient="records")
     return json_str
 
+
 if __name__ == '__main__':
-    result = validate_login_credentials_process_results("tester@cust.com", "Cust@1234")
-    print(result)
+    pass
