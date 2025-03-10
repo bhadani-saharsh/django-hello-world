@@ -6,7 +6,7 @@ import TableDetails
 
 
 def get_connection():
-    uri = TableDetails.DATA_BASE_URI
+    uri = TableDetails.DATA_BASE_URL
     my_client = pymongo.MongoClient(uri)
     # print(my_client)
     return my_client

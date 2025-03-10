@@ -1,6 +1,6 @@
 DATE_BASE_NAME = "ecomm"
 
-DATA_BASE_URI = "mongodb+srv://saharshbhadani:EHzqD6WK0OTbk9jB@cluster0.pella.mongodb.net"
+DATA_BASE_URL = "mongodb+srv://saharshbhadani:EHzqD6WK0OTbk9jB@cluster0.pella.mongodb.net"
 
 USER_TABLE = {
     "USER_USER_ID": "userID",
