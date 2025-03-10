@@ -3,7 +3,7 @@ from datetime import datetime
 
 from django.http import HttpResponse
 from . import FetchDataFromBackEnd
-# from . import FetchDataFromDB
+from . import FetchDataFromDB
 
 def index(request):
     json_data = "null"
@@ -18,10 +18,10 @@ def index(request):
         elif query_str == "PDT_TYPE":
             search_str = request.GET.get('searchFor')
             json_data = FetchDataFromBackEnd.fetch_data_based_on_product_params(product_id=search_str)
-        #elif query_str == "LOGIN":
-         #   user_name = request.GET.get('userName')
-          #  password = request.GET.get('password')
-           # json_data = FetchDataFromDB.validate_login_credentials_process_results(user_name, password)
+        elif query_str == "LOGIN":
+            user_name = request.GET.get('userName')
+            password = request.GET.get('password')
+            json_data = FetchDataFromDB.validate_login_credentials_process_results(user_name, password)
         else:
             json_data = FetchDataFromBackEnd.fetch_data_based_on_query(query=query_str)
     return HttpResponse(json_data)

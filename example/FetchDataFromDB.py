@@ -2,7 +2,7 @@ import pymongo
 from bson.objectid import ObjectId
 import pandas as pd
 
-import TableDetails
+from . import TableDetails
 
 
 def get_connection():
