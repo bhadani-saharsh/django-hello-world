@@ -3,7 +3,7 @@ from datetime import datetime
 
 from django.http import HttpResponse
 from . import FetchDataFromBackEnd
-#from . import FetchDataFromDB
+from . import FetchDataFromDB
 
 def index(request):
     json_data = "null"
