@@ -6,7 +6,7 @@ from . import FetchDataFromBackEnd
 from . import FetchDataFromDB
 
 def index(request):
-    json_data = "null"
+    json_data = "[]"
     if request.method == "GET":
         query_str = request.GET.get('query')
         if query_str == "STR_TYPE":
