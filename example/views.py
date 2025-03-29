@@ -46,6 +46,8 @@ def index(request):
                                                                     Name=Name,
                                                                     Email=Email,
                                                                     Message=Message)
+        elif query_str == "FETCH_LEADS_MESSAGES":
+            json_data = FetchDataFromDB.fetch_all_leads_and_messages_from_leads_table()
         else:
             json_data = FetchDataFromBackEnd.fetch_data_based_on_query(query=query_str)
     else:

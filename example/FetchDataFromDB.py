@@ -99,11 +99,11 @@ def save_results_in_leads_table(table,
     return result
 
 
-def save_message_from_website(module= "Message",
-                              Name= "Tester Kumar",
-                              Email= "tester@admin.com",
-                              Message= "some really big message",
-                              read= "0"
+def save_message_from_website(module="Message",
+                              Name="Tester Kumar",
+                              Email="tester@admin.com",
+                              Message="some really big message",
+                              read="0"
                             ):
     timestamp = datetime.utcnow()
     my_client = get_connection()
@@ -122,6 +122,24 @@ def save_message_from_website(module= "Message",
         return '[{"inserted_id":'+str(result.inserted_id)+'}]'
 
 
+def fetch_all_leads_and_messages_from_leads_table():
+    my_client = get_connection()
+    db = use_database(my_client)
+    table = get_collection_from_database(db, "leads")
+    result = get_all_data_from_leads_table(table)
+    return convert_data_frame_to_json(result)
+
+
+def get_all_data_from_leads_table(table):
+    result = table.find()
+    if result is None:
+        return "[]"
+    else:
+        df = pd.json_normalize(result)
+        return df[['timestamp', 'module', 'Name', 'Email', 'Country', 'PhoneNumber', 'CompanyName',
+        'interestedIn', 'Message', 'read']]
+
+
 def convert_data_frame_to_json(df):
     json_str = df.to_json(orient="records")
     return json_str
@@ -129,4 +147,4 @@ def convert_data_frame_to_json(df):
 
 if __name__ == '__main__':
     pass
-    #print(save_message_from_website())
+    #print(fetch_all_leads_and_messages_from_leads_table())
