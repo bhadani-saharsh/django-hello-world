@@ -23,11 +23,7 @@ def index(request):
             user_name = request.GET.get('userName')
             password = request.GET.get('password')
             json_data = FetchDataFromDB.validate_login_credentials_process_results(user_name, password)
-        else:
-            json_data = FetchDataFromBackEnd.fetch_data_based_on_query(query=query_str)
-    elif request.method == "POST":
-        query_str = request.GET.get('query')
-        if query_str == "SAVE_LEADS":
+        elif query_str == "SAVE_LEADS":
             module= request.GET.get('module')
             Name= request.GET.get('Name')
             Email= request.GET.get('Email')
@@ -50,6 +46,8 @@ def index(request):
                                                                     Name=Name,
                                                                     Email=Email,
                                                                     Message=Message)
+        else:
+            json_data = FetchDataFromBackEnd.fetch_data_based_on_query(query=query_str)
     else:
         query_str = request.GET.get('query')
         json_data = FetchDataFromBackEnd.fetch_data_based_on_query(query=query_str)
