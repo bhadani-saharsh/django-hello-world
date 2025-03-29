@@ -84,3 +84,16 @@ POPULAR_CATEGORIES = {
     "POPULAR_CATEGORIES_PRODUCT_CATEGORY": "ProductCategory",
     "POPULAR_CATEGORIES_THUMBNAIL_ID": "ThumbnailID"
 }
+
+leads = {
+    "leads_timestamp": "timestamp",
+    "leads_module": "module", #leads_form or message
+    "leads_name": "Name",
+    "leads_email": "Email",
+    "leads_Country": "Country",
+    "leads_PhoneNumber": "PhoneNumber",
+    "leads_CompanyName": "CompanyName",
+    "leads_interestedIn": "interestedIn",
+    "leads_Message": "Message",
+    "leads_read": "read" # 1: no, 2: yes, 3: save for later
+}

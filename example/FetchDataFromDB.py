@@ -1,7 +1,7 @@
 import pymongo
 from bson.objectid import ObjectId
 import pandas as pd
-
+from datetime import datetime
 from . import TableDetails
 
 
@@ -22,7 +22,7 @@ def get_collection_from_database(db, table_name):
 
 
 def get_results_for_user_name(table, user_name, password):
-    result = table.find_one({TableDetails.USER_TABLE["USER_EMAIL"] : user_name, TableDetails.USER_TABLE["USER_PASSWORD"] : password})
+    result = table.find_one({TableDetails.USER_TABLE["USER_EMAIL"] : user_name.lower(), TableDetails.USER_TABLE["USER_PASSWORD"] : password})
     if result is None:
         return None
     else:
@@ -41,6 +41,87 @@ def validate_login_credentials_process_results(user_name, password):
         return convert_data_frame_to_json(result[['userID', 'userType']])
 
 
+def save_leads_from_website(module= "leads_form",
+                            Name= "Tester Kumar",
+                            Email= "tester@admin.com" ,
+                            Country= "India",
+                            PhoneNumber= "9168669610",
+                            CompanyName= "Saharsh Bhadani Venture Private Limited",
+                            interestedIn= "Data Analytics",
+                            Message= "some really big message",
+                            ):
+    timestamp = datetime.utcnow()
+    my_client = get_connection()
+    db = use_database(my_client)
+    table = get_collection_from_database(db, "leads")
+    result = save_results_in_leads_table(table=table,
+                                         timestamp=timestamp,
+                                         module=module,
+                                         Name=Name,
+                                         Email=Email,
+                                         Country=Country,
+                                         PhoneNumber=PhoneNumber,
+                                         CompanyName=CompanyName,
+                                         interestedIn=interestedIn,
+                                         Message=Message)
+    if result is None:
+        return '[{"inserted_id": "invalid"}]'
+    else:
+        return '[{"inserted_id":'+str(result.inserted_id)+'}]'
+
+
+def save_results_in_leads_table(table,
+                                timestamp,
+                                module= "leads_form",
+                                Name= "Tester Kumar",
+                                Email= "tester@admin.com" ,
+                                Country= "India",
+                                PhoneNumber= "9168669610",
+                                CompanyName= "Saharsh Bhadani Venture Private Limited",
+                                interestedIn= "Data Analytics",
+                                Message= "some really big message",
+                                read= "0"
+                                ):
+    result = table.insert_one(
+        {
+            TableDetails.leads["leads_timestamp"]: timestamp,
+            TableDetails.leads["leads_module"]: module,
+            TableDetails.leads["leads_name"]: Name,
+            TableDetails.leads["leads_email"]: Email,
+            TableDetails.leads["leads_Country"]: Country,
+            TableDetails.leads["leads_PhoneNumber"]: PhoneNumber,
+            TableDetails.leads["leads_CompanyName"]: CompanyName,
+            TableDetails.leads["leads_interestedIn"]: interestedIn,
+            TableDetails.leads["leads_Message"]: Message,
+            TableDetails.leads["leads_read"]: read
+        }
+    )
+    return result
+
+
+def save_message_from_website(module= "Message",
+                              Name= "Tester Kumar",
+                              Email= "tester@admin.com",
+                              Message= "some really big message",
+                              read= "0"
+                            ):
+    timestamp = datetime.utcnow()
+    my_client = get_connection()
+    db = use_database(my_client)
+    table = get_collection_from_database(db, "leads")
+    result = save_results_in_leads_table(table=table,
+                                         timestamp=timestamp,
+                                         module=module,
+                                         Name=Name,
+                                         Email=Email,
+                                         Message=Message,
+                                         read=read)
+    if result is None:
+        return '[{"inserted_id": "invalid"}]'
+    else:
+        return '[{"inserted_id":'+str(result.inserted_id)+'}]'
+
+
 def convert_data_frame_to_json(df):
     json_str = df.to_json(orient="records")
     return json_str
@@ -48,3 +129,4 @@ def convert_data_frame_to_json(df):
 
 if __name__ == '__main__':
     pass
+    #print(save_message_from_website())
