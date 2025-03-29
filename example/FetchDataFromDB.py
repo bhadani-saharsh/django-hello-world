@@ -67,7 +67,7 @@ def save_leads_from_website(module= "leads_form",
     if result is None:
         return '[{"inserted_id": "invalid"}]'
     else:
-        return '[{"inserted_id":'+str(result.inserted_id)+'}]'
+        return '<!DOCTYPE html><html><body><p> Data Saved Successfully. </p></body></html>'
 
 
 def save_results_in_leads_table(table,
