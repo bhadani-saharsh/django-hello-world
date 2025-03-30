@@ -136,8 +136,30 @@ def get_all_data_from_leads_table(table):
         return "[]"
     else:
         df = pd.json_normalize(result)
+        # Convert to datetime
+        df["timestamp"] = pd.to_datetime(df["timestamp"], format="%Y-%m-%d %H:%H:%S")
+
+        # Set date as index
+        df = df.set_index("timestamp")
+
         return df[['timestamp', 'module', 'Name', 'Email', 'Country', 'PhoneNumber', 'CompanyName',
         'interestedIn', 'Message', 'read']]
+
+
+def save_new_leads_for_future(timestamp):
+    pass
+
+
+def discard_new_leads_now(timestamp):
+    pass
+
+
+def discard_message_now(timestamp):
+    pass
+
+
+def discard_saved_leads_now(timestamp):
+    pass
 
 
 def convert_data_frame_to_json(df):

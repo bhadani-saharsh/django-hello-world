@@ -48,6 +48,18 @@ def index(request):
                                                                     Message=Message)
         elif query_str == "FETCH_LEADS_MESSAGES":
             json_data = FetchDataFromDB.fetch_all_leads_and_messages_from_leads_table()
+        elif query_str == "SAVE_LEADS_FUTURE":
+            timestamp = request.GET.get('timestamp')
+            json_data = FetchDataFromDB.save_new_leads_for_future(timestamp)
+        elif query_str == "DISCARD_NEW_LEADS":
+            timestamp = request.GET.get('timestamp')
+            json_data = FetchDataFromDB.discard_new_leads_now(timestamp)
+        elif query_str == "DISCARD_MESSAGE":
+            timestamp = request.GET.get('timestamp')
+            json_data = FetchDataFromDB.discard_message_now(timestamp)
+        elif query_str == "DISCARD_SAVED_LEAD":
+            timestamp = request.GET.get('timestamp')
+            json_data = FetchDataFromDB.discard_saved_leads_now(timestamp)
         else:
             json_data = FetchDataFromBackEnd.fetch_data_based_on_query(query=query_str)
     else:
