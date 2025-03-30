@@ -95,5 +95,5 @@ leads = {
     "leads_CompanyName": "CompanyName",
     "leads_interestedIn": "interestedIn",
     "leads_Message": "Message",
-    "leads_read": "read" # 1: no, 2: yes, 3: save for later
+    "leads_read": "read" # 0: no, 1: discard, 2: save for later
 }

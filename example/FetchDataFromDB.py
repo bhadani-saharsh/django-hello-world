@@ -1,9 +1,9 @@
 import pymongo
 from bson.objectid import ObjectId
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
+import time
 from . import TableDetails
-
 
 def get_connection():
     uri = TableDetails.DATA_BASE_URL
@@ -131,7 +131,7 @@ def fetch_all_leads_and_messages_from_leads_table():
 
 
 def get_all_data_from_leads_table(table):
-    result = table.find()
+    result = table.find().sort({TableDetails.leads["leads_timestamp"]: 1})
     if result is None:
         return "[]"
     else:
@@ -142,19 +142,135 @@ def get_all_data_from_leads_table(table):
 
 
 def save_new_leads_for_future(timestamp):
-    pass
+    my_client = get_connection()
+    db = use_database(my_client)
+    table = get_collection_from_database(db, "leads")
+    date_time_for_timestamp = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%f")
+    time_after_1_second = date_time_for_timestamp + timedelta(seconds=1)
+    ts_lower = time.mktime(date_time_for_timestamp.timetuple())
+    ts_upper = time.mktime(time_after_1_second.timetuple())
+    filter = {
+        TableDetails.leads["leads_timestamp"]:
+            {"$gte": datetime.fromtimestamp(ts_lower, None), "$lt": datetime.fromtimestamp(ts_upper, None)}
+        , TableDetails.leads["leads_module"]: "leads_form"
+        , TableDetails.leads["leads_read"]: "0"
+    }
+    #print(filter)
+    result = table.find(filter).sort({TableDetails.leads["leads_timestamp"]: 1}).limit(1)
+    #df = pd.json_normalize(result)
+    #print(df)
+    #TableDetails.leads["leads_timestamp"] = timestamp
+    #TableDetails.leads["leads_module"] is leads_form
+    #TableDetails.leads["leads_read"] is 0
+    if result is None:
+        return '[{"userAction": "invalid"}]'
+    else:
+        new_values = {"$set": {TableDetails.leads["leads_read"]: "2"}}
+        update_result = table.update_many(filter, new_values)
+        print(update_result.modified_count)
+        if update_result.modified_count == 1:
+            return '[{"userAction": "successful"}]'
+        else:
+            return '[{"userAction": "invalid"}]'
 
 
 def discard_new_leads_now(timestamp):
-    pass
+    my_client = get_connection()
+    db = use_database(my_client)
+    table = get_collection_from_database(db, "leads")
+    date_time_for_timestamp = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%f")
+    time_after_1_second = date_time_for_timestamp + timedelta(seconds=1)
+    ts_lower = time.mktime(date_time_for_timestamp.timetuple())
+    ts_upper = time.mktime(time_after_1_second.timetuple())
+    filter = {
+        TableDetails.leads["leads_timestamp"]:
+            {"$gte": datetime.fromtimestamp(ts_lower, None), "$lt": datetime.fromtimestamp(ts_upper, None)}
+        , TableDetails.leads["leads_module"]: "leads_form"
+        , TableDetails.leads["leads_read"]: "0"
+    }
+    # print(filter)
+    result = table.find(filter).sort({TableDetails.leads["leads_timestamp"]: 1}).limit(1)
+    # df = pd.json_normalize(result)
+    # print(df)
+    # TableDetails.leads["leads_timestamp"] = timestamp
+    # TableDetails.leads["leads_module"] is leads_form
+    # TableDetails.leads["leads_read"] is 0
+    if result is None:
+        return '[{"userAction": "invalid"}]'
+    else:
+        new_values = {"$set": {TableDetails.leads["leads_read"]: "1"}}
+        update_result = table.update_many(filter, new_values)
+        print(update_result.modified_count)
+        if update_result.modified_count == 1:
+            return '[{"userAction": "successful"}]'
+        else:
+            return '[{"userAction": "invalid"}]'
 
 
 def discard_message_now(timestamp):
-    pass
+    my_client = get_connection()
+    db = use_database(my_client)
+    table = get_collection_from_database(db, "leads")
+    date_time_for_timestamp = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%f")
+    time_after_1_second = date_time_for_timestamp + timedelta(seconds=1)
+    ts_lower = time.mktime(date_time_for_timestamp.timetuple())
+    ts_upper = time.mktime(time_after_1_second.timetuple())
+    filter = {
+        TableDetails.leads["leads_timestamp"]:
+            {"$gte": datetime.fromtimestamp(ts_lower, None), "$lt": datetime.fromtimestamp(ts_upper, None)}
+        , TableDetails.leads["leads_module"]: "message"
+        , TableDetails.leads["leads_read"]: "0"
+    }
+    # print(filter)
+    result = table.find(filter).sort({TableDetails.leads["leads_timestamp"]: 1}).limit(1)
+    # df = pd.json_normalize(result)
+    # print(df)
+    # TableDetails.leads["leads_timestamp"] = timestamp
+    # TableDetails.leads["leads_module"] is leads_form
+    # TableDetails.leads["leads_read"] is 0
+    if result is None:
+        return '[{"userAction": "invalid"}]'
+    else:
+        new_values = {"$set": {TableDetails.leads["leads_read"]: "1"}}
+        update_result = table.update_many(filter, new_values)
+        print(update_result.modified_count)
+        if update_result.modified_count == 1:
+            return '[{"userAction": "successful"}]'
+        else:
+            return '[{"userAction": "invalid"}]'
 
 
 def discard_saved_leads_now(timestamp):
-    pass
+    my_client = get_connection()
+    db = use_database(my_client)
+    table = get_collection_from_database(db, "leads")
+    date_time_for_timestamp = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%f")
+    time_after_1_second = date_time_for_timestamp + timedelta(seconds=1)
+    ts_lower = time.mktime(date_time_for_timestamp.timetuple())
+    ts_upper = time.mktime(time_after_1_second.timetuple())
+    filter = {
+        TableDetails.leads["leads_timestamp"]:
+            {"$gte": datetime.fromtimestamp(ts_lower, None), "$lt": datetime.fromtimestamp(ts_upper, None)}
+        , TableDetails.leads["leads_module"]: "leads_form"
+        , TableDetails.leads["leads_read"]: "2"
+    }
+    # print(filter)
+    result = table.find(filter).sort({TableDetails.leads["leads_timestamp"]: 1}).limit(1)
+    # df = pd.json_normalize(result)
+    # print(df)
+    # TableDetails.leads["leads_timestamp"] = timestamp
+    # TableDetails.leads["leads_module"] is leads_form
+    # TableDetails.leads["leads_read"] is 0
+    if result is None:
+        return '[{"userAction": "invalid"}]'
+    else:
+        new_values = {"$set": {TableDetails.leads["leads_read"]: "1"}}
+        update_result = table.update_many(filter, new_values)
+        print(update_result.modified_count)
+        if update_result.modified_count == 1:
+            return '[{"userAction": "successful"}]'
+        else:
+            return '[{"userAction": "invalid"}]'
 
 
 def convert_data_frame_to_json(df):
@@ -163,6 +279,7 @@ def convert_data_frame_to_json(df):
 
 
 if __name__ == '__main__':
-    #print(save_leads_from_website())
     pass
+    #print(save_leads_from_website())
     #print(fetch_all_leads_and_messages_from_leads_table())
+    #save_new_leads_for_future("2025-03-29T10:54:49.501")
