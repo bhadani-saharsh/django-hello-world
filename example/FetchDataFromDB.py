@@ -136,11 +136,6 @@ def get_all_data_from_leads_table(table):
         return "[]"
     else:
         df = pd.json_normalize(result)
-        # Convert to datetime
-        df["timestamp"] = pd.to_datetime(df["timestamp"], format="%Y-%m-%d %H:%H:%S")
-
-        # Set date as index
-        df = df.set_index("timestamp")
 
         return df[['timestamp', 'module', 'Name', 'Email', 'Country', 'PhoneNumber', 'CompanyName',
         'interestedIn', 'Message', 'read']]
@@ -163,10 +158,11 @@ def discard_saved_leads_now(timestamp):
 
 
 def convert_data_frame_to_json(df):
-    json_str = df.to_json(orient="records")
+    json_str = df.to_json(orient="records", date_format='iso')
     return json_str
 
 
 if __name__ == '__main__':
+    #print(save_leads_from_website())
     pass
     #print(fetch_all_leads_and_messages_from_leads_table())
