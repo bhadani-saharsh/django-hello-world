@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 import time
 from . import TableDetails
 
+
 def get_connection():
     uri = TableDetails.DATA_BASE_URL
     my_client = pymongo.MongoClient(uri)
@@ -273,6 +274,23 @@ def discard_saved_leads_now(timestamp):
             return '[{"userAction": "invalid"}]'
 
 
+def save_client_ip_address_now(client_ip):
+    my_client = get_connection()
+    db = use_database(my_client)
+    table = get_collection_from_database(db, "ip_table")
+    save_client_ip_in_ip_table(table, client_ip=client_ip)
+    return '[{"inserted_id": "valid"}]'
+
+
+def save_client_ip_in_ip_table(table, client_ip):
+    timestamp = datetime.utcnow()
+    table.insert_one(
+        {
+            TableDetails.ip_table["ip_table_timestamp"]: timestamp,
+            TableDetails.ip_table["ip_table_client_ip"]: client_ip
+        })
+
+
 def convert_data_frame_to_json(df):
     json_str = df.to_json(orient="records", date_format='iso')
     return json_str
@@ -283,3 +301,4 @@ if __name__ == '__main__':
     #print(save_leads_from_website())
     #print(fetch_all_leads_and_messages_from_leads_table())
     #save_new_leads_for_future("2025-03-29T10:54:49.501")
+    print(save_client_ip_address_now("my ip addr"))

@@ -60,6 +60,9 @@ def index(request):
         elif query_str == "DISCARD_SAVED_LEAD":
             timestamp = request.GET.get('timestamp')
             json_data = FetchDataFromDB.discard_saved_leads_now(timestamp)
+        elif query_str == "SAVE_IP_ADDRESS":
+            client_ip = request.GET.get('client_ip')
+            json_data = FetchDataFromDB.save_client_ip_address_now(client_ip)
         else:
             json_data = FetchDataFromBackEnd.fetch_data_based_on_query(query=query_str)
     else:

@@ -97,3 +97,8 @@ leads = {
     "leads_Message": "Message",
     "leads_read": "read" # 0: no, 1: discard, 2: save for later
 }
+
+ip_table = {
+    "ip_table_timestamp": "timestamp",
+    "ip_table_client_ip": "client_ip"
+}
