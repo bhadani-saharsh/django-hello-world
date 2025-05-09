@@ -120,7 +120,7 @@ def save_message_from_website(module="Message",
     if result is None:
         return '[{"inserted_id": "invalid"}]'
     else:
-        return '[{"inserted_id":'+str(result.inserted_id)+'}]'
+        return '[{"inserted_id":"'+str(result.inserted_id)+'"}]'
 
 
 def fetch_all_leads_and_messages_from_leads_table():
