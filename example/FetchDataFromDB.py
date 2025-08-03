@@ -106,6 +106,18 @@ def save_message_from_website(module="Message",
                               Message="some really big message",
                               read="0"
                             ):
+    if Name is None:
+        return '[{"inserted_id": "invalid id tester kumar."}]'
+    elif Email is None:
+        return '[{"inserted_id": "invalid id tester kumar."}]'
+    elif Message is None:
+        return '[{"inserted_id": "invalid id tester kumar."}]'
+    elif (Name is not None) and (len(Name) == 0):
+        return '[{"inserted_id": "invalid id tester kumar."}]'
+    elif (Email is not None) and (len(Email) == 0):
+        return '[{"inserted_id": "invalid id tester kumar."}]'
+    elif (Message is not None) and (len(Message) == 0):
+        return '[{"inserted_id": "invalid id tester kumar."}]'
     timestamp = datetime.utcnow()
     my_client = get_connection()
     db = use_database(my_client)
